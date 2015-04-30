@@ -1,0 +1,7 @@
+<resources>
+    <!-- Some Strings To Change Here -->
+    <string name="app_name">OneStoreFramework</string>
+    <string name="framework_text">A Bootstrap For Creating A Mobile Shopping Assistance For Your Own Store.</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+</resources>

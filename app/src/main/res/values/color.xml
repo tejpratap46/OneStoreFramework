@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_background">#d3d6db</color>
+    <color name="color_background_splash">#3D7AAE</color>
+    <color name="color_actionbar">#3D7AAE</color>
+    <color name="color_text_light">#FFFFFF</color>
+    <color name="color_text_light_hint">#D4DDE4</color>
+    <color name="cardBackgroundColor">#D4DDE9</color>
+    <color name="cardBackgroundColorPress">#D4DDE0</color>
+    <color name="cardBorder">#c2c3c8</color>
+    <color name="bg_gradient_start">#31244e</color>
+    <color name="bg_gradient_end">#6b394c</color>
+    <color name="custom_button_color">#184C85</color>
+    <color name="custom_button_pressed">#1C5FA6</color>
+    <color name="custom_list_selector_color">#1C5FA6</color>
+    <color name="custom_list_selector_color_pressed">#184C85</color>
+    <color name="custom_menu_list_selector_color">#424B5A</color>
+    <color name="custom_menu_list_selector_color_pressed">#292E34</color>
+    
+    <color name="color_blue">#1C5FA6</color>
+    <color name="color_blue_dark">#184C85</color>
+    <color name="color_blue_fb">#3D7AAE</color>
+    <color name="color_fb_background">#d3d6db</color>
+    <color name="color_green">#355E3B</color>
+    <color name="color_green_light">#4BC244</color>
+    <color name="color_orange">#F46E00</color>
+    <color name="color_gray">#C2C2C2</color>
+    <color name="color_red">#C13B21</color>
+    <color name="color_red_light">#B9595A</color>
+    <color name="color_twitter">#45B9ED</color>
+    <color name="color_graydark">#303030</color>
+    <color name="color_fb_button_color">#F3F3F3</color>
+    <color name="color_fb_button">#9B9EA3</color>
+    <color name="color_fb_button_pressed">#6A9CF6</color>
+
+</resources>

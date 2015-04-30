@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.brainstrom.onestoreframework">
+
+    <!--Important Permissions To Make The Framework Wonderful-->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!--A permission That Framework Creates To Use Push Notification Work, Only Apps using this permission with Same Signature Can give a Notification To This App -->
+
+    <permission
+        android:name="com.brainstrom.onestoreframework.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"></permission>
+
+    <!--And Now We Are Using The Permission That We Created Above-->
+    <uses-permission android:name="com.onestoreframework.onestore.permission.C2D_MESSAGE" />
+
+    <!--Using Some Hardware Features Of Phone-->
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <!-- Activities That Framework Uses, You Can Modify Or Use As Your Requirement -->
+
+        <activity
+            android:name=".nfc.NfcBeam"
+            android:label="NFC Beam"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity
+            android:icon="@drawable/ic_launcher"
+            android:name=".nfc.NfcTagWriter"
+            android:label="Writer"
+            android:configChanges="orientation|keyboardHidden"></activity>
+
+        <activity
+            android:icon="@drawable/ic_launcher"
+            android:name=".nfc.NfcReader"
+            android:label="NFC Reader"
+            android:configChanges="orientation|keyboardHidden">
+            <!-- open any tag with ndef content -->
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
+            <!-- see also http://stackoverflow.com/questions/7114297/how-specify-mimetype-for-read-nfc-tag-with-url -->
+        </activity>
+
+        <receiver
+            android:name=".gcm.GcmReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.googlecloudmessaging" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".gcm.GcmMessageHandler"></service>
+
+        <!--Your Activities From Here-->
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
