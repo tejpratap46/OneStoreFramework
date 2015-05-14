@@ -375,6 +375,14 @@ public class URLs {
     }
 
     /*
+    * Get Items Under A Coupon
+    */
+
+    public String couponAddCouponURL(String code,String imageurl,String description) {
+        return API_ENDPOINT + "featured/featured.add.php?apikey=" + API_KEY + "&code=" + code + "&imageurl=" + imageurl + "&description=" + description;
+    }
+
+    /*
     * Delete A Coupon
     */
 
