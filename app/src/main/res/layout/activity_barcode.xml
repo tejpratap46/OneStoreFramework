@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Barcode And QrCode Scanner"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/bScanBarcode"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Start Scanning"
+        android:textColor="@drawable/fb_button"
+        android:background="@color/color_fb_button_color"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20sp"
+        android:layout_weight="1" />
+
+</LinearLayout>
