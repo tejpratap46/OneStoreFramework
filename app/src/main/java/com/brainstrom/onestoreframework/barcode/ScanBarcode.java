@@ -1,19 +1,19 @@
 package com.brainstrom.onestoreframework.barcode;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import android.util.Log;
 
 import com.brainstrom.onestoreframework.R;
 
 import net.sourceforge.zbar.Symbol;
 
-public class ScanBarcode extends Activity implements View.OnClickListener {
+public abstract class ScanBarcode extends ActionBarActivity implements View.OnClickListener {
 
     Button bScanBarcode;
     private static final int ZBAR_SCANNER_REQUEST = 0;
@@ -26,17 +26,13 @@ public class ScanBarcode extends Activity implements View.OnClickListener {
         bScanBarcode.setOnClickListener(this);
     }
 
-    /*
-    *
-    */
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bScanBarcode:
                 Intent zb = new Intent(getApplicationContext(),
                         ZBarScannerActivity.class);
-                zb.putExtra(ZBarConstants.SCAN_MODES, new int[]{Symbol.UPCA, Symbol.UPCE, Symbol.QRCODE});
+                zb.putExtra(ZBarConstants.SCAN_MODES, new int[]{Symbol.UPCA, Symbol.UPCE, Symbol.QRCODE,Symbol.CODE128});
                 startActivityForResult(zb, ZBAR_SCANNER_REQUEST);
                 break;
         }

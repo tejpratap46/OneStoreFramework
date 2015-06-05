@@ -51,12 +51,45 @@ public class ShoppingListDatabaseHandler extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	/*
+	* Fire Query on database
+	*/
+
+	public List<ShoppingListFrame> queryShoppingList(String query) {
+		List<ShoppingListFrame> shoppingListList = new ArrayList<ShoppingListFrame>();
+		try {
+			// Select All Query
+			String selectQuery = query;
+
+			SQLiteDatabase db = this.getWritableDatabase();
+			Cursor cursor = db.rawQuery(selectQuery, null);
+
+			// looping through all rows and adding to list
+			if (cursor.moveToFirst()) {
+                do {
+                    ShoppingListFrame shoppingList = new ShoppingListFrame();
+                    shoppingList.setID(Integer.parseInt(cursor.getString(0)));
+                    shoppingList.setName(cursor.getString(1));
+                    shoppingList.setPrice(cursor.getString(2));
+                    shoppingList.setQuantity(Integer.parseInt(cursor.getString(3)));
+                    // Adding shoppingList to list
+                    shoppingListList.add(shoppingList);
+                } while (cursor.moveToNext());
+            }
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+
+		// return shoppingList list
+		return shoppingListList;
+	}
+
 	/**
 	 * All CRUD(Create, Read, Update, Delete) Operations
 	 */
 
 	// Adding new shoppingList
-	public void addshoppingList(ShoppingListFrame shoppingList) {
+	public void addShoppingList(ShoppingListFrame shoppingList) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
@@ -71,7 +104,7 @@ public class ShoppingListDatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	// Getting single shoppingList
-	public ShoppingListFrame getshoppingList(int id) {
+	public ShoppingListFrame getShoppingList(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor cursor = db.query(TABLE_SHOPPING_LIST, new String[] { KEY_ID,
@@ -88,7 +121,7 @@ public class ShoppingListDatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	// Getting All shoppingLists
-	public List<ShoppingListFrame> getAllshoppingLists() {
+	public List<ShoppingListFrame> getAllShoppingLists() {
 		List<ShoppingListFrame> shoppingListList = new ArrayList<ShoppingListFrame>();
 		// Select All Query
 		String selectQuery = "SELECT  * FROM " + TABLE_SHOPPING_LIST;
@@ -114,7 +147,22 @@ public class ShoppingListDatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	// Updating single shoppingList
-	public int updateshoppingList(ShoppingListFrame shoppingList) {
+	public int updateShoppingList(ShoppingListFrame shoppingList) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(KEY_NAME, shoppingList.getName());
+		values.put(KEY_PRICE, shoppingList.getPrice());
+		values.put(KEY_QUANTITY, shoppingList.getQuantity());
+
+		// updating row
+		return db.update(TABLE_SHOPPING_LIST, values, KEY_ID + " = ?",
+				new String[] { String.valueOf(shoppingList.getID()) });
+	}
+
+	// Update Quantity of Single Item
+
+	public int UpdateQtyOfItem(ShoppingListFrame shoppingList){
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
@@ -128,7 +176,7 @@ public class ShoppingListDatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	// Deleting single shoppingList
-	public void deleteshoppingList(ShoppingListFrame shoppingList) {
+	public void deleteShoppingList(ShoppingListFrame shoppingList) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_SHOPPING_LIST, KEY_ID + " = ?",
 				new String[] { String.valueOf(shoppingList.getID()) });
@@ -137,7 +185,7 @@ public class ShoppingListDatabaseHandler extends SQLiteOpenHelper {
 
 	// Getting shoppingLists Count
 
-	public int getshoppingListsCount() {
+	public int getShoppingListsCount() {
 		String countQuery = "SELECT  * FROM " + TABLE_SHOPPING_LIST;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(countQuery, null);
@@ -147,6 +195,7 @@ public class ShoppingListDatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	// check if item exists
+
 	public boolean Exists(int _id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("select 1 from " + TABLE_SHOPPING_LIST

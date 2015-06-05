@@ -112,38 +112,38 @@ public class URLs {
     * Search A Product
     */
 
-    public String marketSearchItemByURL(int Type, String q) {
+    public String marketSearchItemByURL(int Type, String q, int page) {
         String ret = "";
         switch (Type) {
             case SearchProductById:
-                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itemid=" + q;
+                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itemid=" + q + "&page=" + page;
                 break;
             case SearchProductByName:
-                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itemname=" + q;
+                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itemname=" + q + "&page=" + page;
                 break;
             case SearchProductByPrice:
-                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itemprice=" + q;
+                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itemprice=" + q + "&page=" + page;
                 break;
             case SearchProductByDescription:
-                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itemdiscreption=" + q;
+                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itemdiscreption=" + q + "&page=" + page;
                 break;
             case SearchProductByCategory:
-                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itemcategory=" + q;
+                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itemcategory=" + q + "&page=" + page;
                 break;
             case SearchProductByBrand:
-                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itembrand=" + q;
+                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itembrand=" + q + "&page=" + page;
                 break;
             case SearchProductByQuantity:
-                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&quantity=" + q;
+                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&quantity=" + q + "&page=" + page;
                 break;
             case SearchProductByYear:
-                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&year=" + q;
+                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&year=" + q + "&page=" + page;
                 break;
             case SearchProductByMonth:
-                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&month=" + q;
+                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&month=" + q + "&page=" + page;
                 break;
             default:
-                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itemdiscreption=" + q;
+                ret = API_ENDPOINT + "market/market.search.php?apikey=" + API_KEY + "&itemdiscreption=" + q + "&page=" + page;
         }
         return ret;
     }
@@ -251,11 +251,19 @@ public class URLs {
      */
 
     /*
-    * Save Cart As A List
+    * Apply Coupon To A list
+    */
+
+    public String couponAddURL(String code, String itemids, String percentage) {
+        return API_ENDPOINT + "coupon/coupon.add.php?apikey=" + API_KEY + "&code=" + code + "&itemids=" + itemids + "&percentage=" + percentage;
+    }
+
+    /*
+    * Apply Coupon To A list
     */
 
     public String couponCheckURL(String coupon, String listId) {
-        return API_ENDPOINT + "cart/cart.save.php?apikey=" + API_KEY + "&coupon=" + coupon + "&listid=" + listId;
+        return API_ENDPOINT + "coupon/coupon.check.php?apikey=" + API_KEY + "&coupon=" + coupon + "&listid=" + listId;
     }
 
     /*
@@ -493,6 +501,26 @@ public class URLs {
     }
 
     /*
+    * This section uses loyalty features of the framework
+    */
+
+    /*
+     * get Loyalty Stats Of user
+     */
+
+    public String loyaltyGetUrl(String username){
+        return API_ENDPOINT + "loyalty/loyalty.get.php?apikey=" + API_KEY + "&username=" + username;
+    }
+
+    /*
+     * Use Loyalty Points Loyalty Of user
+     */
+
+    public String loyaltyUsePointsUrl(String username, String PointsToUse){
+        return API_ENDPOINT + "loyalty/loyalty.usepoints.php?apikey=" + API_KEY + "&username=" + username + "&points=" + PointsToUse;
+    }
+
+    /*
     * Control Push Notifications To User
     */
 
@@ -500,8 +528,8 @@ public class URLs {
     * Update Market When A List Is Sold
     */
 
-    public String notificationSendURL(String listId) {
-        return API_ENDPOINT + "lists/lists.sold.php?apikey=" + API_KEY + "&listid=" + listId;
+    public String notificationSendURL(String gcmId,String title,String message) {
+        return API_ENDPOINT + "notification/notification.send.php?apikey=" + API_KEY + "&gcmId=" + gcmId + "&title=" + title + "&message=" + message;
     }
 
     /*
@@ -510,6 +538,7 @@ public class URLs {
 
     /*
     * get Map For A Floor Or Segment
+    * @param floor : maps are separated from floor
     */
 
     public String orientationShowMapURL(String floor) {
@@ -547,5 +576,52 @@ public class URLs {
 
     public String paymentReceiveURL(String id, String bankId) {
         return API_ENDPOINT + "payment/payment.send.php?apikey=" + API_KEY + "&id=" + id + "&bankid=" + bankId;
+    }
+
+    /*
+    * Receive A Cash Payment, dose not deduct main balance
+    * @param : bankId : From Bank Id
+    * balance : Amount To Transfer
+    */
+
+    public String paymentReceiveCashURL(String balance, String bankId) {
+        return API_ENDPOINT + "payment/payment.receivecash.php?apikey=" + API_KEY + "&balance=" + balance + "&bankid=" + bankId;
+    }
+
+    /*
+    * Receive A Cash Payment, dose not require user account
+    * @param : balance : Amount To Transfer
+    */
+
+    public String paymentReceiveCashFromUnregisteredUserURL(String balance) {
+        return API_ENDPOINT + "payment/payment.receivecashfromunregistereduser.php?apikey=" + API_KEY + "&balance=" + balance;
+    }
+
+    /*
+    * Get Payments Made Today
+    */
+
+    public String paymentGetTodaysURL() {
+        return API_ENDPOINT + "payment/payment.gettodays.php?apikey=" + API_KEY;
+    }
+
+    /*
+    * All Information About Payments Completed
+    */
+
+    /*
+    * Get All payments Completed From Stone Age
+    */
+
+    public String paymentCompletedGetAllUrl(){
+        return API_ENDPOINT + "payment_completed/payment_completed.getall.php?apikey=" + API_KEY;
+    }
+
+    /*
+    * Get Payments Completed Today
+    */
+
+    public String paymentCompletedGetTodaysUrl(){
+        return API_ENDPOINT + "payment_completed/payment_completed.gettodays.php?apikey=" + API_KEY;
     }
 }

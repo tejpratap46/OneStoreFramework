@@ -19,7 +19,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class GcmMessageHandler extends IntentService {
 
-    String mes;
+    String mes, payId,ammount;
     private Handler handler;
 
     public GcmMessageHandler() {
@@ -35,6 +35,8 @@ public class GcmMessageHandler extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
+        payId = extras.getString("payId");
+        ammount = extras.getString("ammount");
 
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
 
